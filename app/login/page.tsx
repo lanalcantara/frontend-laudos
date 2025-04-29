@@ -20,7 +20,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://gestaodelaudos-backend.onrender.com/api/login", {
+      const response = await fetch("https://gestaodelaudos-backend.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
