@@ -32,7 +32,7 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/users")
+      const res = await axios.get("https://gestaodelaudos-backend.onrender.com/users")
       setUsers(res.data)
     } catch (err) {
       toast({
@@ -46,6 +46,8 @@ export default function UsersPage() {
   useEffect(() => {
     fetchUsers()
   }, [])
+
+  console.log(users)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
