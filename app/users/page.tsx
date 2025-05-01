@@ -17,7 +17,7 @@ interface User {
   id: string
   name: string
   email: string
-  role: string
+  perfil: string
   status: string
 }
 
@@ -26,13 +26,13 @@ export default function UsersPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    role: "",
+    perfil: "",
   })
   const [users, setUsers] = useState<User[]>([])
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("https://gestaodelaudos-backend.onrender.com/users")
+      const res = await axios.get("htts://localhost:5000/api/usuarios");
       setUsers(res.data)
     } catch (err) {
       toast({
@@ -52,7 +52,7 @@ export default function UsersPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.name || !formData.email || !formData.role) {
+    if (!formData.name || !formData.email || !formData.perfil) {
       toast({
         title: "Erro",
         description: "Preencha todos os campos antes de salvar.",
@@ -62,10 +62,10 @@ export default function UsersPage() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/users", {
+      await axios.post("http://localhost:5000/api/usuarios", {
         name: formData.name,
         email: formData.email,
-        role: formData.role.toLowerCase(),
+        perfil: formData.perfil.toLowerCase(),
         password: "123456", // senha padrão
       })
 
@@ -74,7 +74,7 @@ export default function UsersPage() {
         description: "Usuário adicionado com sucesso!",
       })
 
-      setFormData({ name: "", email: "", role: "" })
+      setFormData({ name: "", email: "", perfil: "" })
       setOpen(false)
       fetchUsers() // atualiza a tabela
     } catch (error: any) {
@@ -116,8 +116,8 @@ export default function UsersPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
               <Select
-                value={formData.role}
-                onValueChange={(value) => setFormData({ ...formData, role: value })}
+                value={formData.perfil}
+                onValueChange={(value) => setFormData({ ...formData, perfil: value })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Perfil" />
@@ -182,7 +182,7 @@ export default function UsersPage() {
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.role}</TableCell>
+                  <TableCell>{user.perfil}</TableCell>
                   <TableCell>
                     <span
                       className={`px-2 py-1 rounded-full text-xs ${user.status === "Ativo"

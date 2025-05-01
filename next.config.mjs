@@ -1,48 +1,31 @@
-let userConfig = undefined
-try {
-  userConfig = await import('./v0-user-next.config')
-} catch (e) {
-  // ignore error
-}
+// @ts-check
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
-  experimental: {
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
-    parallelServerCompiles: true,
-  },
-}
-
-mergeConfig(nextConfig, userConfig)
-
-function mergeConfig(nextConfig, userConfig) {
-  if (!userConfig) {
-    return
+export default (phase, { defaultConfig }) => {
+  const nextConfig = {
+    // Suas configurações aqui, por exemplo:
+    eslint: {
+      ignoreDuringBuilds: true,
+    },
+    typescript: {
+      ignoreBuildErrors: true,
+    },
+    images: {
+      unoptimized: true,
+    },
+    experimental: {
+      webpackBuildWorker: true,
+      parallelServerBuildTraces: true,
+      parallelServerCompiles: true,
+    },
+    pwa: {
+      dest: 'public',
+      register: true,
+      skipWaiting: true,
+      disable: process.env.NODE_ENV === 'development', // Evita ativar o PWA em ambiente de desenvolvimento
+    },
+    // Adicione outras configurações do Next.js conforme necessário
   }
 
-  for (const key in userConfig) {
-    if (
-      typeof nextConfig[key] === 'object' &&
-      !Array.isArray(nextConfig[key])
-    ) {
-      nextConfig[key] = {
-        ...nextConfig[key],
-        ...userConfig[key],
-      }
-    } else {
-      nextConfig[key] = userConfig[key]
-    }
-  }
+  return nextConfig
 }
-
-export default nextConfig
