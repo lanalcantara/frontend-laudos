@@ -32,7 +32,7 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("htts://localhost:5000/api/usuarios");
+      const res = await axios.get("htts://localhost:3001/api/usuarios");
       setUsers(res.data)
     } catch (err) {
       toast({
@@ -62,7 +62,7 @@ export default function UsersPage() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/usuarios", {
+      await axios.post("http://localhost:3001/api/usuarios", {
         name: formData.name,
         email: formData.email,
         perfil: formData.perfil.toLowerCase(),
